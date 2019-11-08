@@ -77,9 +77,9 @@
         android:paddingEnd="5dp"
         android:paddingBottom="10dp"
         android:textColor="#61000000"
-        android:text="Type of Transport"
+        tools:text="Type of Transport"
         android:drawableEnd="@drawable/ic_icon_navigation_arrow_drop_down_24_px"
-        android:background="#26A9A9A9"
+        android:background="@drawable/rect_cornered_textview_bg"
         app:layout_constraintTop_toBottomOf="@id/img_text1"
         app:layout_constraintStart_toStartOf="@id/guideline_start_16dp"
         app:layout_constraintEnd_toEndOf="@id/guideline_end_16dp"/>
@@ -96,8 +96,8 @@
         android:paddingBottom="10dp"
         android:drawableEnd="@drawable/ic_icon_navigation_arrow_drop_down_24_px"
         android:textColor="#61000000"
-        android:text="Flight Number"
-        android:background="#26A9A9A9"
+        tools:text="Flight Number"
+        android:background="@drawable/rect_cornered_textview_bg"
         app:layout_constraintTop_toBottomOf="@id/txt_selector_transport"
         app:layout_constraintStart_toStartOf="@id/guideline_start_16dp"
         app:layout_constraintEnd_toEndOf="@id/guideline_end_16dp"/>
