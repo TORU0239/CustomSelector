@@ -4,6 +4,8 @@
     <declare-styleable name="CustomSelector">
         <attr name="requiredRowCount" format="integer"/>
         <attr name="headerText" format="string"/>
+        <attr name="dataSetName" format="string">
+        </attr>
     </declare-styleable>
 
 </resources>

@@ -12,12 +12,9 @@ import sg.toru.customselector.R
 import java.lang.IllegalStateException
 
 class CustomSelector : ConstraintLayout {
-    constructor(context:Context):super(context){
-        init()
-    }
+    constructor(context:Context):super(context){}
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs){
-        init()
-        getAttrs(attrs)
+        init(attrs)
     }
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
         context,
@@ -25,25 +22,36 @@ class CustomSelector : ConstraintLayout {
         defStyleAttr
     )
     {
-        init()
-        getAttrs(attrs)
+        init(attrs)
     }
 
     private var requiredRow = 2
     private var headerText = ""
 
-    private val currentSelectorType = KindOfSeelector.TRANSPORT
-    private var currentSelectedSubType = Transport.SEA
+    private var currentSelectorType = KindOfSeelector.TRANSPORT
 
-    private lateinit var image1:ImageView
-    private lateinit var image2:ImageView
-    private lateinit var image3:ImageView
+    private lateinit var button1:ConstraintLayout
+    private lateinit var button2:ConstraintLayout
+    private lateinit var button3:ConstraintLayout
 
     private lateinit var textHeader:TextView
     private lateinit var textSelectorFirstRow:TextView
     private lateinit var textSelectorSecondRow:TextView
 
-    private fun getAttrs(attrs:AttributeSet?){
+    private var currentSelectedSubType:String = ""
+
+    private fun init(attrs:AttributeSet?){
+        val view = LayoutInflater.from(context).inflate(R.layout.layout_cusom_selector, this, false)
+        addView(view)
+        textHeader = view.findViewById(R.id.txt_head)
+
+        button1 = view.findViewById(R.id.btn_first)
+        button2 = view.findViewById(R.id.btn_second)
+        button3 = view.findViewById(R.id.btn_third)
+
+        textSelectorFirstRow = view.findViewById(R.id.txt_selector_first_row)
+        textSelectorSecondRow = view.findViewById(R.id.txt_selector_second_row)
+
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.CustomSelector)
         requiredRow = typedArray.getInt(R.styleable.CustomSelector_requiredRowCount, 2)
         if(requiredRow > 2){
@@ -59,82 +67,118 @@ class CustomSelector : ConstraintLayout {
             headerText = str
             textHeader.text = headerText
         }
+
+        currentSelectorType = when(typedArray.getString(R.styleable.CustomSelector_dataSetName)){
+            "transport", "TRANSPORT"-> KindOfSeelector.TRANSPORT
+            "residence", "RESIDENCE"-> KindOfSeelector.RESIDENCE
+            else -> KindOfSeelector.TRANSPORT
+        }
         typedArray.recycle()
-    }
 
-    private fun init(){
-        val view = LayoutInflater.from(context).inflate(R.layout.layout_cusom_selector, this, false)
-        addView(view)
-        textHeader = view.findViewById(R.id.txt_head)
+        when(currentSelectorType){
+            KindOfSeelector.TRANSPORT->{
+                (button1.getChildAt(0) as ImageView).setImageResource(R.drawable.ic_plane)
+                (button2.getChildAt(0) as ImageView).setImageResource(R.drawable.ic_car)
+                (button3.getChildAt(0) as ImageView).setImageResource(R.drawable.ic_ship)
+            }
 
-        image1 = view.findViewById(R.id.img_text1)
-        image2 = view.findViewById(R.id.img_text2)
-        image3 = view.findViewById(R.id.img_text3)
-
-        image1.setOnClickListener {
-            currentSelectedSubType = Transport.AIR
-            setType()
-            setUnselectedToOtherButton(image1)
-        }
-        image2.setOnClickListener {
-            currentSelectedSubType = Transport.LAND
-            setType()
-            setUnselectedToOtherButton(image2)
-        }
-        image3.setOnClickListener {
-            currentSelectedSubType = Transport.SEA
-            setType()
-            setUnselectedToOtherButton(image3)
+            KindOfSeelector.RESIDENCE->{
+                (button1.getChildAt(0) as ImageView).setImageResource(R.drawable.ic_hotel)
+                (button2.getChildAt(0) as ImageView).setImageResource(R.drawable.ic_residential)
+                (button3.getChildAt(0) as ImageView).setImageResource(R.drawable.ic_options)
+            }
         }
 
-        textSelectorFirstRow = view.findViewById(R.id.txt_selector_first_row)
-        textSelectorSecondRow = view.findViewById(R.id.txt_selector_second_row)
+        button1.setOnClickListener {
+            currentSelectedSubType = if(currentSelectorType == KindOfSeelector.TRANSPORT){
+                Transport.AIR.name
+            } else{
+                Residence.HOTEL.name
+            }
 
-        image1.performClick()
+            setType()
+            setUnselectedToOtherButton(button1)
+        }
+        button2.setOnClickListener {
+            currentSelectedSubType = if(currentSelectorType == KindOfSeelector.TRANSPORT){
+                Transport.LAND.name
+            } else{
+                Residence.RESIDENTIAL.name
+            }
+            setType()
+            setUnselectedToOtherButton(button2)
+        }
+        button3.setOnClickListener {
+            currentSelectedSubType = if(currentSelectorType == KindOfSeelector.TRANSPORT){
+                Transport.AIR.name
+            } else{
+                Residence.OTHERS.name
+            }
+            setType()
+            setUnselectedToOtherButton(button3)
+        }
+
+        button1.performClick()
         setType()
     }
 
-    private fun setUnselectedToOtherButton(button:ImageView){
+    private fun setUnselectedToOtherButton(button:ConstraintLayout){
         when(button){
-            image1 ->{
-                image1.background = ContextCompat.getDrawable(context, R.drawable.rect_cornered_box_selected)
-                image2.background = ContextCompat.getDrawable(context, R.drawable.rect_cornered_box_unselected)
-                image3.background = ContextCompat.getDrawable(context, R.drawable.rect_cornered_box_unselected)
+            button1 ->{
+                button1.background = ContextCompat.getDrawable(context, R.drawable.rect_cornered_box_selected)
+                button2.background = ContextCompat.getDrawable(context, R.drawable.rect_cornered_box_unselected)
+                button3.background = ContextCompat.getDrawable(context, R.drawable.rect_cornered_box_unselected)
             }
-            image2 ->{
-                image1.background = ContextCompat.getDrawable(context, R.drawable.rect_cornered_box_unselected)
-                image2.background = ContextCompat.getDrawable(context, R.drawable.rect_cornered_box_selected)
-                image3.background = ContextCompat.getDrawable(context, R.drawable.rect_cornered_box_unselected)
+            button2 ->{
+                button1.background = ContextCompat.getDrawable(context, R.drawable.rect_cornered_box_unselected)
+                button2.background = ContextCompat.getDrawable(context, R.drawable.rect_cornered_box_selected)
+                button3.background = ContextCompat.getDrawable(context, R.drawable.rect_cornered_box_unselected)
             }
-            image3 ->{
-                image1.background = ContextCompat.getDrawable(context, R.drawable.rect_cornered_box_unselected)
-                image2.background = ContextCompat.getDrawable(context, R.drawable.rect_cornered_box_unselected)
-                image3.background = ContextCompat.getDrawable(context, R.drawable.rect_cornered_box_selected)
+            button3 ->{
+                button1.background = ContextCompat.getDrawable(context, R.drawable.rect_cornered_box_unselected)
+                button2.background = ContextCompat.getDrawable(context, R.drawable.rect_cornered_box_unselected)
+                button3.background = ContextCompat.getDrawable(context, R.drawable.rect_cornered_box_selected)
             }
             else -> throw IllegalStateException("WTF?")
         }
     }
 
     private fun setType(){
-        when(currentSelectedSubType){
-            Transport.AIR -> {
-                textSelectorFirstRow.text = Transport.AIR.typeOfTransport
-                textSelectorSecondRow.text = Transport.AIR.numberOfTransport
+        if(currentSelectorType == KindOfSeelector.TRANSPORT){
+            when(currentSelectedSubType){
+                Transport.AIR.name -> {
+                    textSelectorFirstRow.text = Transport.AIR.typeOfTransport
+                    textSelectorSecondRow.text = Transport.AIR.numberOfTransport
+                }
+                Transport.LAND.name ->{
+                    textSelectorFirstRow.text = Transport.LAND.typeOfTransport
+                    textSelectorSecondRow.text = Transport.LAND.numberOfTransport
+                }
+                Transport.SEA.name ->{
+                    textSelectorFirstRow.text = Transport.SEA.typeOfTransport
+                    textSelectorSecondRow.text = Transport.SEA.numberOfTransport
+                }
             }
-            Transport.LAND ->{
-                textSelectorFirstRow.text = Transport.LAND.typeOfTransport
-                textSelectorSecondRow.text = Transport.LAND.numberOfTransport
-            }
-            Transport.SEA ->{
-                textSelectorFirstRow.text = Transport.SEA.typeOfTransport
-                textSelectorSecondRow.text = Transport.SEA.numberOfTransport
+        }
+        else{
+            when(currentSelectedSubType){
+                Residence.HOTEL.name -> {
+                    textSelectorFirstRow.text = Residence.HOTEL.otherInfo
+                }
+                Residence.RESIDENTIAL.name ->{
+                    textSelectorFirstRow.text = Residence.RESIDENTIAL.otherInfo
+                }
+                Residence.OTHERS.name ->{
+                    textSelectorFirstRow.text = Residence.OTHERS.otherInfo
+                }
             }
         }
     }
 }
 
 enum class KindOfSeelector{
-    TRANSPORT, RESIDENCE
+    TRANSPORT,
+    RESIDENCE
 }
 
 // AIR : Type of Air Transport, Flight Number
@@ -146,11 +190,12 @@ enum class Transport(val kindOfTransport:String,
                      val numberOfTransport:String){
     AIR("Air", "Type of Air Transport", "Flight Number"),
     LAND("Land","Type of Vehicle", "Vehicle Number"),
-    SEA("Land","Type of Vessel", "Vessel Number")
+    SEA("Sea","Type of Vessel", "Vessel Number")
 }
 
 enum class Residence(val kindOfResidence:String,
                      val otherInfo:String){
     HOTEL("Hotel", "Hotel Name"),
-    Residential("Residential", "Postal Code")
+    RESIDENTIAL("Residential", "Postal Code"),
+    OTHERS("Others", "Others")
 }
