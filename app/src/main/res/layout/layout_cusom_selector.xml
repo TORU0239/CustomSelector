@@ -25,7 +25,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/metropolis_regular"
-        android:text="What's your vehicle?"
         app:layout_constraintEnd_toEndOf="@id/guideline_end_16dp"
         app:layout_constraintStart_toStartOf="@id/guideline_start_16dp"
         app:layout_constraintTop_toTopOf="parent" />
@@ -67,7 +66,7 @@
         app:layout_constraintTop_toBottomOf="@id/txt_head" />
 
     <TextView
-        android:id="@+id/txt_selector_transport"
+        android:id="@+id/txt_selector_first_row"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
@@ -85,7 +84,7 @@
         app:layout_constraintEnd_toEndOf="@id/guideline_end_16dp"/>
 
     <TextView
-        android:id="@+id/txt_selector_transport_number"
+        android:id="@+id/txt_selector_second_row"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
@@ -98,7 +97,7 @@
         android:textColor="#61000000"
         tools:text="Flight Number"
         android:background="@drawable/rect_cornered_textview_bg"
-        app:layout_constraintTop_toBottomOf="@id/txt_selector_transport"
+        app:layout_constraintTop_toBottomOf="@id/txt_selector_first_row"
         app:layout_constraintStart_toStartOf="@id/guideline_start_16dp"
         app:layout_constraintEnd_toEndOf="@id/guideline_end_16dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
