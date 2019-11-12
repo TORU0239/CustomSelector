@@ -16,11 +16,18 @@
 		app:layout_constraintStart_toStartOf="parent"/>
 
 	<sg.toru.customselector.view.CustomSelector
+		android:id="@+id/custom_selector_second"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		app:requiredRowCount="1"
 		app:dataSetName="residence"
 		app:headerText="Where are you staying?"
 		app:layout_constraintTop_toBottomOf="@id/custom_selector_first"
+		app:layout_constraintStart_toStartOf="parent"/>
+
+	<sg.toru.customselector.view.CustomDepartureForm
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		app:layout_constraintTop_toBottomOf="@id/custom_selector_second"
 		app:layout_constraintStart_toStartOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
