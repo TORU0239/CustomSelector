@@ -1,6 +1,10 @@
 package sg.toru.customselector.view
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.Typeface
+import android.graphics.fonts.Font
+import android.graphics.fonts.FontFamily
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +12,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import sg.toru.customselector.R
 import java.lang.IllegalStateException
 
@@ -40,9 +45,18 @@ class CustomSelector : ConstraintLayout {
 
     private var currentSelectedSubType:String = ""
 
+
+    private lateinit var metropolisBold:Typeface
+    private lateinit var metropolisRegular:Typeface
+    private fun initFont(){
+        metropolisBold = ResourcesCompat.getFont(context, R.font.metropolis_bold)!!
+        metropolisRegular = ResourcesCompat.getFont(context, R.font.metropolis_regular)!!
+    }
+
     private fun init(attrs:AttributeSet?){
         val view = LayoutInflater.from(context).inflate(R.layout.layout_cusom_selector, this, false)
         addView(view)
+        initFont()
         textHeader = view.findViewById(R.id.txt_head)
 
         button1 = view.findViewById(R.id.btn_first)
@@ -77,15 +91,25 @@ class CustomSelector : ConstraintLayout {
 
         when(currentSelectorType){
             KindOfSeelector.TRANSPORT->{
-                (button1.getChildAt(0) as ImageView).setImageResource(R.drawable.ic_plane)
-                (button2.getChildAt(0) as ImageView).setImageResource(R.drawable.ic_car)
-                (button3.getChildAt(0) as ImageView).setImageResource(R.drawable.ic_ship)
+                (button1.getChildAt(1) as ImageView).setImageResource(R.drawable.ic_plane)
+                (button1.getChildAt(2) as TextView).text = Transport.AIR.name
+
+                (button2.getChildAt(1) as ImageView).setImageResource(R.drawable.ic_car)
+                (button2.getChildAt(2) as TextView).text = Transport.LAND.name
+
+                (button3.getChildAt(1) as ImageView).setImageResource(R.drawable.ic_ship)
+                (button3.getChildAt(2) as TextView).text = Transport.SEA.name
             }
 
             KindOfSeelector.RESIDENCE->{
-                (button1.getChildAt(0) as ImageView).setImageResource(R.drawable.ic_hotel)
-                (button2.getChildAt(0) as ImageView).setImageResource(R.drawable.ic_residential)
-                (button3.getChildAt(0) as ImageView).setImageResource(R.drawable.ic_options)
+                (button1.getChildAt(1) as ImageView).setImageResource(R.drawable.ic_hotel)
+                (button1.getChildAt(2) as TextView).text = Residence.HOTEL.name
+
+                (button2.getChildAt(1) as ImageView).setImageResource(R.drawable.ic_residential)
+                (button2.getChildAt(2) as TextView).text = Residence.RESIDENTIAL.name
+
+                (button3.getChildAt(1) as ImageView).setImageResource(R.drawable.ic_options)
+                (button3.getChildAt(2) as TextView).text = Residence.OTHERS.name
             }
         }
 
@@ -126,18 +150,60 @@ class CustomSelector : ConstraintLayout {
         when(button){
             button1 ->{
                 button1.background = ContextCompat.getDrawable(context, R.drawable.rect_cornered_box_selected)
+                (button1.getChildAt(2) as TextView).apply {
+                    setTextColor(resources.getColor(R.color.selectedTextColor, null))
+                    typeface = metropolisBold
+                }
+
                 button2.background = ContextCompat.getDrawable(context, R.drawable.rect_cornered_box_unselected)
+                (button2.getChildAt(2) as TextView).apply {
+                    setTextColor(resources.getColor(R.color.basicTextColor, null))
+                    typeface = metropolisRegular
+                }
+
                 button3.background = ContextCompat.getDrawable(context, R.drawable.rect_cornered_box_unselected)
+                (button3.getChildAt(2) as TextView).apply {
+                    setTextColor(resources.getColor(R.color.basicTextColor, null))
+                    typeface = metropolisRegular
+                }
             }
             button2 ->{
                 button1.background = ContextCompat.getDrawable(context, R.drawable.rect_cornered_box_unselected)
+                (button1.getChildAt(2) as TextView).apply {
+                    typeface = metropolisRegular
+                    setTextColor(resources.getColor(R.color.basicTextColor, null))
+                }
+
                 button2.background = ContextCompat.getDrawable(context, R.drawable.rect_cornered_box_selected)
+                (button2.getChildAt(2) as TextView).apply {
+                    typeface = metropolisBold
+                    setTextColor(resources.getColor(R.color.selectedTextColor, null))
+                }
+
                 button3.background = ContextCompat.getDrawable(context, R.drawable.rect_cornered_box_unselected)
+                (button3.getChildAt(2) as TextView).apply {
+                    typeface = metropolisRegular
+                    setTextColor(resources.getColor(R.color.basicTextColor, null))
+                }
             }
             button3 ->{
                 button1.background = ContextCompat.getDrawable(context, R.drawable.rect_cornered_box_unselected)
+                (button1.getChildAt(2) as TextView).apply {
+                    typeface = metropolisRegular
+                    setTextColor(resources.getColor(R.color.basicTextColor, null))
+                }
+
                 button2.background = ContextCompat.getDrawable(context, R.drawable.rect_cornered_box_unselected)
+                (button2.getChildAt(2) as TextView).apply {
+                    typeface = metropolisRegular
+                    setTextColor(resources.getColor(R.color.basicTextColor, null))
+                }
+
                 button3.background = ContextCompat.getDrawable(context, R.drawable.rect_cornered_box_selected)
+                (button3.getChildAt(2) as TextView).apply {
+                    typeface = metropolisBold
+                    setTextColor(resources.getColor(R.color.selectedTextColor, null))
+                }
             }
             else -> throw IllegalStateException("WTF?")
         }

@@ -29,69 +29,44 @@
         app:layout_constraintStart_toStartOf="@id/guideline_start_16dp"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <include
+        layout="@layout/layout_custom_button"
         android:id="@+id/btn_first"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/rect_cornered_box_selected"
-        app:layout_constraintWidth_percent="0.3"
+        app:layout_constraintWidth_percent="0.29"
         app:layout_constraintDimensionRatio="1.23:1"
-        app:layout_constraintEnd_toStartOf="@+id/btn_second"
         app:layout_constraintStart_toStartOf="@id/guideline_start_16dp"
-        app:layout_constraintTop_toBottomOf="@id/txt_head">
-        <ImageView
-            android:id="@+id/image_first"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintEnd_toStartOf="@+id/btn_second"
+        app:layout_constraintTop_toBottomOf="@id/txt_head"
+        app:layout_constraintHorizontal_chainStyle="packed"/>
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <include
+        layout="@layout/layout_custom_button"
         android:id="@+id/btn_second"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/rect_cornered_box_unselected"
-        app:layout_constraintWidth_percent="0.3"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintWidth_percent="0.29"
         app:layout_constraintDimensionRatio="1.23:1"
-        app:layout_constraintEnd_toStartOf="@+id/btn_third"
-        app:layout_constraintStart_toEndOf="@+id/btn_first"
-        app:layout_constraintTop_toBottomOf="@id/txt_head">
-        <ImageView
-            android:id="@+id/image_second"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintEnd_toStartOf="@+id/btn_first"
+        app:layout_constraintStart_toEndOf="@id/btn_third"
+        app:layout_constraintTop_toBottomOf="@id/txt_head"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <include
+        layout="@layout/layout_custom_button"
         android:id="@+id/btn_third"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/rect_cornered_box_unselected"
-        app:layout_constraintWidth_percent="0.3"
+        app:layout_constraintWidth_percent="0.29"
         app:layout_constraintDimensionRatio="1.23:1"
-        app:layout_constraintEnd_toEndOf="@id/guideline_end_16dp"
         app:layout_constraintStart_toEndOf="@+id/btn_second"
-        app:layout_constraintTop_toBottomOf="@id/txt_head">
-        <ImageView
-            android:id="@+id/image_third"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintEnd_toEndOf="@id/guideline_end_16dp"
+        app:layout_constraintTop_toBottomOf="@id/txt_head" />
 
     <TextView
         android:id="@+id/txt_selector_first_row"
