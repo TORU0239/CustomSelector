@@ -9,6 +9,7 @@
         android:id="@+id/txt_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:fontFamily="@font/metropolis_regular"
         android:text="What dates will you be in Singapore?"
         app:layout_constraintTop_toTopOf="parent"
@@ -56,6 +57,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
         android:layout_marginStart="16dp"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/txt_header"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintWidth_percent="0.438"
@@ -142,11 +144,11 @@
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/txt_header"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintWidth_percent="0.438"
-        app:layout_constraintDimensionRatio="1:0.316"
-        tools:visibility="visible">
+        app:layout_constraintDimensionRatio="1:0.316">
 
         <ImageView
             android:id="@+id/btn_open_calendar_departure_filled"
