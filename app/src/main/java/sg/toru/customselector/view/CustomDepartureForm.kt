@@ -2,13 +2,14 @@ package sg.toru.customselector.view
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnClickListener
-import android.widget.ImageView
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import sg.toru.customselector.R
+import java.lang.StringBuilder
+import java.text.SimpleDateFormat
+import java.util.*
 
 class CustomDepartureForm:ConstraintLayout {
     constructor(context: Context?) : super(context){
@@ -26,121 +27,42 @@ class CustomDepartureForm:ConstraintLayout {
         init()
     }
 
-    private lateinit var arriveForm:ConstraintLayout
-    private lateinit var departureForm: ConstraintLayout
-    private lateinit var filledArriveForm:ConstraintLayout
-    private lateinit var filledDepartureForm:ConstraintLayout
+    private lateinit var unfilledForm:ConstraintLayout
+    private lateinit var filledForm:ConstraintLayout
 
-    private lateinit var calendarArrive: ImageView
-    private lateinit var filledCalendarArrive: ImageView
-    private lateinit var calendarDepart: ImageView
-    private lateinit var filledCalendarDepart: ImageView
+    private lateinit var txtArrivalDate: TextView
+    private lateinit var txtDepartureDate: TextView
 
-    // callback
-    var onCallback:(()->Unit)? = null
-
-    private val calendarClickListener = OnClickListener { view ->
-        when(view.tag){
-            "calendarArrive" -> {
-                Log.i("CustomDeparture", "Arrive Clicked")
-                onCallback?.invoke()
-            }
-            "calendarDepart" -> {
-                Log.i("CustomDeparture", "Depart Clicked")
-                showDifferentContainer(true, view.tag as String)
-            }
-            "filledCalendarArrive" -> {
-                Log.i("CustomDeparture", "Arrive Clicked")
-                showDifferentContainer(false, view.tag as String)
-            }
-            "filledCalendarDepart" -> {
-                Log.i("CustomDeparture", "Depart Clicked")
-                showDifferentContainer(false, view.tag as String)
-            }
-
-            else -> throw IllegalArgumentException("WTF the other one?")
-        }
-    }
-
-    private fun showDifferentContainer(isFilled:Boolean, tag:String){
-        when(tag){
-            "calendarArrive"->{
-                if(isFilled){
-                    arriveForm.visibility = View.GONE
-                    filledArriveForm.visibility = View.VISIBLE
-                }
-                else{
-                    arriveForm.visibility = View.VISIBLE
-                    filledArriveForm.visibility = View.GONE
-                }
-            }
-            "calendarDepart"->{
-                if(isFilled){
-                    departureForm.visibility = View.GONE
-                    filledDepartureForm.visibility = View.VISIBLE
-                }
-                else{
-                    departureForm.visibility = View.VISIBLE
-                    filledDepartureForm.visibility = View.GONE
-                }
-            }
-            "filledCalendarArrive"->{
-                if(!isFilled){
-                    arriveForm.visibility = View.VISIBLE
-                    filledArriveForm.visibility = View.GONE
-                }
-                else{
-                    arriveForm.visibility = View.GONE
-                    filledArriveForm.visibility = View.VISIBLE
-                }
-            }
-            "filledCalendarDepart"->{
-                if(!isFilled){
-                    departureForm.visibility = View.VISIBLE
-                    filledDepartureForm.visibility = View.GONE
-                }
-                else{
-                    departureForm.visibility = View.GONE
-                    filledDepartureForm.visibility = View.VISIBLE
-                }
-            }
-        }
-    }
-
+    var callback:(()->Unit)? = null
     private fun init(){
         val view = LayoutInflater.from(context).inflate(R.layout.layout_arrival_date, this, false)
         addView(view)
 
-        arriveForm = view.findViewById(R.id.container_arrival)
-        departureForm = view.findViewById(R.id.container_departure)
+        unfilledForm = view.findViewById(R.id.container_unfilled)
+        unfilledForm.setOnClickListener {
+            callback?.invoke()
+        }
+        unfilledForm.visibility = View.VISIBLE
 
-        filledArriveForm = view.findViewById(R.id.container_arrival_filled)
-        filledDepartureForm = view.findViewById(R.id.container_departure_filled)
-
-        calendarArrive = view.findViewById(R.id.btn_open_calendar_arrival)
-        calendarDepart = view.findViewById(R.id.btn_open_calendar_departure)
-
-        filledCalendarArrive = view.findViewById(R.id.btn_open_calendar_arrival_filled)
-        filledCalendarDepart = view.findViewById(R.id.btn_open_calendar_departure_filled)
-
-        calendarArrive.apply {
-            tag = "calendarArrive"
-            setOnClickListener(calendarClickListener)
+        filledForm = view.findViewById(R.id.container_filled)
+        filledForm.setOnClickListener {
+            callback?.invoke()
         }
 
-        calendarDepart.apply {
-            tag = "calendarDepart"
-            setOnClickListener(calendarClickListener)
-        }
+        filledForm.visibility = View.GONE
 
-        filledCalendarArrive.apply {
-            tag = "filledCalendarArrive"
-            setOnClickListener(calendarClickListener)
-        }
+        txtArrivalDate = view.findViewById(R.id.txt_arrival_date)
+        txtDepartureDate = view.findViewById(R.id.txt_departure_date)
+    }
 
-        filledCalendarDepart.apply {
-            tag = "filledCalendarDepart"
-            setOnClickListener(calendarClickListener)
-        }
+    fun setFirstDateAndLastDate(
+        firstCalendar:Calendar,
+        secondCalendar: Calendar
+    ){
+        val sdf = SimpleDateFormat("MMM dd, yyyy")
+        txtArrivalDate.text = sdf.format(firstCalendar.time)
+        txtDepartureDate.text = sdf.format(secondCalendar.time)
+        filledForm.visibility = View.VISIBLE
+        unfilledForm.visibility = View.GONE
     }
 }

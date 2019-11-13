@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         departureForm = findViewById(R.id.departure_form)
-        departureForm.onCallback = {
+        departureForm.callback = {
             SlyCalendarDialog()
                 .setSingle(false)
                 .setCallback(object:SlyCalendarDialog.Callback{
@@ -26,6 +26,11 @@ class MainActivity : AppCompatActivity() {
                         hours: Int,
                         minutes: Int
                     ) {
+                        firstDate?.let { firstCalendar ->
+                            secondDate?.let { secondCalendar ->
+                                departureForm.setFirstDateAndLastDate(firstCalendar, secondCalendar)
+                            }
+                        }
                     }
 
                     override fun onCancelled() {}
