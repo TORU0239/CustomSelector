@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import sg.toru.customselector.R
-import java.lang.StringBuilder
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -33,20 +32,20 @@ class CustomDepartureForm:ConstraintLayout {
     private lateinit var txtArrivalDate: TextView
     private lateinit var txtDepartureDate: TextView
 
-    var callback:(()->Unit)? = null
+    var callback:((Calendar?, Calendar?)->Unit)? = null
     private fun init(){
         val view = LayoutInflater.from(context).inflate(R.layout.layout_arrival_date, this, false)
         addView(view)
 
         unfilledForm = view.findViewById(R.id.container_unfilled)
         unfilledForm.setOnClickListener {
-            callback?.invoke()
+            callback?.invoke(firstCalendar, secondCalendar)
         }
         unfilledForm.visibility = View.VISIBLE
 
         filledForm = view.findViewById(R.id.container_filled)
         filledForm.setOnClickListener {
-            callback?.invoke()
+            callback?.invoke(firstCalendar, secondCalendar)
         }
 
         filledForm.visibility = View.GONE
@@ -55,11 +54,17 @@ class CustomDepartureForm:ConstraintLayout {
         txtDepartureDate = view.findViewById(R.id.txt_departure_date)
     }
 
+    var firstCalendar:Calendar? = null
+    var secondCalendar:Calendar? = null
+
+
+    private val sdf = SimpleDateFormat("MMM dd, yyyy")
     fun setFirstDateAndLastDate(
         firstCalendar:Calendar,
         secondCalendar: Calendar
     ){
-        val sdf = SimpleDateFormat("MMM dd, yyyy")
+        this.firstCalendar = firstCalendar
+        this.secondCalendar = secondCalendar
         txtArrivalDate.text = sdf.format(firstCalendar.time)
         txtDepartureDate.text = sdf.format(secondCalendar.time)
         filledForm.visibility = View.VISIBLE

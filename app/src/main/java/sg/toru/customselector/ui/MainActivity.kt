@@ -1,8 +1,7 @@
 package sg.toru.customselector.ui
 
-import android.app.DatePickerDialog
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import ru.slybeaver.slycalendarview.SlyCalendarDialog
 import sg.toru.customselector.R
 import sg.toru.customselector.view.CustomDepartureForm
@@ -16,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         departureForm = findViewById(R.id.departure_form)
-        departureForm.callback = {
+        departureForm.callback = { firstCalendar, secondCalendar ->
             SlyCalendarDialog()
                 .setSingle(false)
                 .setCallback(object:SlyCalendarDialog.Callback{
@@ -35,9 +34,9 @@ class MainActivity : AppCompatActivity() {
 
                     override fun onCancelled() {}
                 })
+                .setStartDate(firstCalendar?.time)
+                .setEndDate(secondCalendar?.time)
                 .show(supportFragmentManager, "CALENDAR")
         }
-
-
     }
 }
