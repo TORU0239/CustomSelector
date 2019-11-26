@@ -5,30 +5,38 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	tools:context=".ui.MainActivity">
-	<sg.toru.customselector.view.CustomSelector
-		android:id="@+id/custom_selector_first"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		app:headerText="What is your mode of transport?"
-		app:requiredRowCount="2"
-		app:dataSetName="transport"
-		app:layout_constraintTop_toTopOf="parent"
-		app:layout_constraintStart_toStartOf="parent"/>
+<!--	<sg.toru.customselector.view.CustomSelector-->
+<!--		android:id="@+id/custom_selector_first"-->
+<!--		android:layout_width="match_parent"-->
+<!--		android:layout_height="wrap_content"-->
+<!--		app:headerText="What is your mode of transport?"-->
+<!--		app:requiredRowCount="2"-->
+<!--		app:dataSetName="transport"-->
+<!--		app:layout_constraintTop_toTopOf="parent"-->
+<!--		app:layout_constraintStart_toStartOf="parent"/>-->
 
-	<sg.toru.customselector.view.CustomSelector
-		android:id="@+id/custom_selector_second"
+<!--	<sg.toru.customselector.view.CustomSelector-->
+<!--		android:id="@+id/custom_selector_second"-->
+<!--		android:layout_width="match_parent"-->
+<!--		android:layout_height="wrap_content"-->
+<!--		app:requiredRowCount="1"-->
+<!--		app:dataSetName="residence"-->
+<!--		app:headerText="Where are you staying?"-->
+<!--		app:layout_constraintTop_toBottomOf="@id/custom_selector_first"-->
+<!--		app:layout_constraintStart_toStartOf="parent"/>-->
+
+<!--	<sg.toru.customselector.view.CustomDepartureForm-->
+<!--        android:id="@+id/departure_form"-->
+<!--		android:layout_width="match_parent"-->
+<!--		android:layout_height="wrap_content"-->
+<!--		app:layout_constraintTop_toBottomOf="@id/custom_selector_second"-->
+<!--		app:layout_constraintStart_toStartOf="parent"/>-->
+
+	<sg.toru.customselector.view.CustomTransportSelector
+		android:id="@+id/transport_selector"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		app:requiredRowCount="1"
-		app:dataSetName="residence"
 		app:headerText="Where are you staying?"
-		app:layout_constraintTop_toBottomOf="@id/custom_selector_first"
-		app:layout_constraintStart_toStartOf="parent"/>
-
-	<sg.toru.customselector.view.CustomDepartureForm
-        android:id="@+id/departure_form"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		app:layout_constraintTop_toBottomOf="@id/custom_selector_second"
+		app:layout_constraintTop_toTopOf="parent"
 		app:layout_constraintStart_toStartOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
