@@ -5,6 +5,8 @@ import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -32,7 +34,7 @@ class CustomTransportSelector : ConstraintLayout {
 
     private lateinit var textHeader:TextView
     private lateinit var textSelectorFirstRow:TextView
-    private lateinit var textSelectorSecondRow:TextView
+    private lateinit var textSelectorSecondRow:EditText
 
     private lateinit var metropolisBold:Typeface
     private lateinit var metropolisRegular:Typeface
@@ -86,11 +88,30 @@ class CustomTransportSelector : ConstraintLayout {
 
         button1.performClick()
         setType(button1)
+
+        val ticket = findViewById<ConstraintLayout>(R.id.container_ticket)
+        ticket.setOnClickListener {
+            textSelectorFirstRow.visibility = View.VISIBLE
+            textSelectorSecondRow.visibility = View.VISIBLE
+            it.visibility = View.GONE
+        }
+
+        textSelectorSecondRow.setOnEditorActionListener { v, actionId, event ->
+            if(actionId == EditorInfo.IME_ACTION_DONE){
+                textSelectorFirstRow.visibility = View.GONE
+                textSelectorSecondRow.visibility = View.GONE
+                ticket.visibility = View.VISIBLE
+                typeOfTransportationCallback?.invoke()
+            }
+            false
+        }
     }
 
     private val onClickListener = OnClickListener {
 
     }
+
+    var typeOfTransportationCallback:(()->Unit)? = null
 
     private fun setUnselectedToOtherButton(button:ConstraintLayout){
         when(button){

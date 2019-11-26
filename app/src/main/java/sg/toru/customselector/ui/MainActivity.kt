@@ -22,6 +22,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         transportForm = findViewById(R.id.transport_selector)
+        transportForm.typeOfTransportationCallback = {
+        }
+
 
 //        departureForm = findViewById(R.id.departure_form)
 //
