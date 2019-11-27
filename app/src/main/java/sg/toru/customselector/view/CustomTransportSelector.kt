@@ -5,6 +5,7 @@ import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnClickListener
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ImageView
@@ -62,15 +63,15 @@ class CustomTransportSelector : ConstraintLayout {
         textSelectorSecondRow = view.findViewById(R.id.txt_selector_second_row)
 
         (button1.getChildAt(1) as ImageView).setImageResource(R.drawable.ic_plane)
-        (button1.getChildAt(2) as TextView).text = Transport.AIR.name
+        (button1.getChildAt(2) as TextView).text = "AIR"
         button1.tag = "btn1"
 
         (button2.getChildAt(1) as ImageView).setImageResource(R.drawable.ic_car)
-        (button2.getChildAt(2) as TextView).text = Transport.LAND.name
+        (button2.getChildAt(2) as TextView).text = "LAND"
         button2.tag = "btn2"
 
         (button3.getChildAt(1) as ImageView).setImageResource(R.drawable.ic_ship)
-        (button3.getChildAt(2) as TextView).text = Transport.SEA.name
+        (button3.getChildAt(2) as TextView).text = "SEA"
         button3.tag = "btn3"
 
         button1.setOnClickListener {
@@ -179,16 +180,16 @@ class CustomTransportSelector : ConstraintLayout {
     private fun setType(view:View){
         when(view.tag){
             "btn1" -> {
-                textSelectorFirstRow.text = Transport.AIR.typeOfTransport
-                textSelectorSecondRow.hint = Transport.AIR.numberOfTransport
+                textSelectorFirstRow.text = "Type of Air Transport"
+                textSelectorSecondRow.hint = "Flight Number"
             }
             "btn2" ->{
-                textSelectorFirstRow.text = Transport.LAND.typeOfTransport
-                textSelectorSecondRow.hint = Transport.LAND.numberOfTransport
+                textSelectorFirstRow.text = "Type of Vehicle"
+                textSelectorSecondRow.hint = "Vehicle Number"
             }
             "btn3" ->{
-                textSelectorFirstRow.text = Transport.SEA.typeOfTransport
-                textSelectorSecondRow.hint = Transport.SEA.numberOfTransport
+                textSelectorFirstRow.text = "Type of Vessel"
+                textSelectorSecondRow.hint = "Vessel Number"
             }
         }
     }
